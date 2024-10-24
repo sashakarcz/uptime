@@ -28,7 +28,6 @@ jobs:
       # Run Python DNS check script
       - name: Run DNS Check Python Script
         run: |
-          mkdir -p history/dns/
           python3 python/dns_check.py
 
       # Fetch and Checkout gh-pages Branch
