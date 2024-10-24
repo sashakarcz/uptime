@@ -1,0 +1,84 @@
+  name: DNS Monitoring
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Check every 5 minutes
+  repository_dispatch:
+    types: [dns_check]
+  workflow_dispatch:
+
+jobs:
+  dns_check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Create Dockerfile using Alpine and install yq and bind-tools
+      - name: Create Dockerfile for DNS and YAML Parsing
+        run: |
+          cat << 'EOF' > Dockerfile
+          FROM alpine:latest
+          RUN apk --no-cache add bind-tools \
+              && wget https://github.com/mikefarah/yq/releases/download/v4.24.5/yq_linux_amd64 \
+              && chmod +x yq_linux_amd64 && mv yq_linux_amd64 /usr/local/bin/yq
+
+          CMD ["sh", "-c", "result=$(dig +short $DOMAIN $RECORD_TYPE); \
+                         echo \"DNS check for domain: $DOMAIN\"; \
+                         echo \"Expected: $EXPECTED_RECORD, Got: $result\"; \
+                         if [ \"$result\" = \"$EXPECTED_RECORD\" ]; then \
+                           echo 'DNS check passed'; \
+                         else \
+                           echo 'DNS check failed: Got $result, expected $EXPECTED_RECORD'; \
+                         fi"]
+          EOF
+
+      # Build the Alpine-based Docker Image with yq
+      - name: Build Docker Image for DNS Check
+        run: |
+          docker build -t dns-check-action .
+
+      # Read the YAML file and convert it to JSON using yq inside the container
+      - name: Parse domains.yml to JSON
+        run: |
+          docker run --rm -v $(pwd)/config/domains.yml:/domains.yml dns-check-action /usr/local/bin/yq e '.domains' -o=json /domains.yml > domain_list.json
+
+      # Debugging: Print the contents of domain_list.json
+      - name: Debug domain_list.json
+        run: |
+          cat domain_list.json
+
+      # Loop through and check DNS
+      - name: Loop through and check DNS
+        run: |
+          domains=$(cat domain_list.json)
+          for row in $(echo "${domains}" | jq -r '.[] | @base64'); do
+            _jq() {
+              echo ${row} | base64 --decode | jq -r ${1}
+            }
+            DOMAIN=$(_jq '.domain')
+            EXPECTED=$(_jq '.expected_record')
+            TYPE=$(_jq '.record_type')
+
+            # Run DNS check and capture the result
+            RESULT=$(docker run --rm -e DOMAIN=$DOMAIN -e EXPECTED_RECORD=$EXPECTED -e RECORD_TYPE=$TYPE dns-check-action)
+
+            # Output the DNS result
+            echo "$RESULT"
+
+            # Extract and save the actual result to a file for Upptime (or use it in your status logic)
+            echo "{ \"domain\": \"$DOMAIN\", \"expected\": \"$EXPECTED\", \"actual\": \"$RESULT\" }" >> history/dns_results.json
+
+          done
+
+      # Commit and push the DNS results to the repository
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add history/dns_results.json
+          git commit -m "Update DNS Results"
+          git push origin master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
