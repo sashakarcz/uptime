@@ -41,7 +41,7 @@ jobs:
       - name: Remove or move untracked status file
         run: |
           if [ -f "history/dns/status.md" ]; then
-            rm history/dns/status.md  # Optionally move to a temp location: mv history/dns/status.md /tmp/
+            rm history/dns/status.md
           fi
 
       # Fetch and Checkout gh-pages Branch
@@ -54,7 +54,6 @@ jobs:
       - name: Recreate status.md file
         run: |
           mkdir -p history/dns
-          cp /tmp/status.md history/dns/status.md || true  # Copy back the file if it was moved, or recreate it
 
       # Commit and push the DNS results to the gh-pages branch
       - name: Commit and Push Changes
