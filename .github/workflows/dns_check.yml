@@ -36,6 +36,7 @@ jobs:
           mkdir -p history/dns
           echo "## DNS Monitoring Results" > history/dns/status.md
           cat dns_results.json >> history/dns/status.md
+          rm dns_results.json
 
       # Remove or move untracked status file to allow branch checkout
       - name: Remove or move untracked status file
