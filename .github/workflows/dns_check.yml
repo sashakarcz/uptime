@@ -79,6 +79,12 @@ jobs:
           echo "## DNS Monitoring Results" > history/dns/status.md
           cat dns_results.json >> history/dns/status.md
 
+ # Fetch the gh-pages branch and switch to it
+      - name: Fetch and Checkout gh-pages Branch
+        run: |
+          git fetch origin gh-pages
+          git checkout gh-pages
+
       # Commit and push the DNS results to the gh-pages branch
       - name: Commit and Push Changes
         run: |
