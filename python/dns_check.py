@@ -1,73 +1,50 @@
-import json
-import subprocess
 import yaml
-import os
+import subprocess
+import json
 from datetime import datetime
 
-# Load domains from YAML file
-def load_domains(yaml_file):
-    with open(yaml_file, 'r') as file:
-        try:
-            domains = yaml.safe_load(file)
-            return domains['domains']
-        except yaml.YAMLError as e:
-            print(f"Error loading YAML file: {e}")
-            return []
+# Load the .upptimerc.yml file
+with open('.upptimerc.yml', 'r') as file:
+    config = yaml.safe_load(file)
 
-# Perform DNS check using dig
-def dns_check(domain, record_type):
+# Initialize the results array
+results = []
+
+# Function to run a DNS check
+def run_dns_check(domain, expected_record, record_type):
+    print(f"Running DNS check for {domain} (Type: {record_type}, Expected: {expected_record})")
     try:
-        # Use subprocess to run the dig command and capture the output
-        result = subprocess.check_output(
-            ['dig', '+short', domain, record_type],
-            universal_newlines=True
-        ).strip()
-        return result
+        # Run the dig command to get the DNS record
+        result = subprocess.check_output(["dig", "+short", domain, record_type], text=True).strip()
+
+        if not result:
+            result = "No record found"
+
+        # Compare the result with the expected record
+        if result == expected_record:
+            print(f"DNS check passed for {domain}")
+        else:
+            print(f"DNS check failed for {domain}. Got {result}, expected {expected_record}")
+
+        return {"domain": domain, "expected": expected_record, "actual": result, "timestamp": str(datetime.utcnow())}
+
     except subprocess.CalledProcessError as e:
-        print(f"Error performing DNS check for {domain}: {e}")
-        return "ERROR: DNS check failed"
+        print(f"Error during DNS check for {domain}: {str(e)}")
+        return {"domain": domain, "expected": expected_record, "actual": "Error", "timestamp": str(datetime.utcnow())}
 
-# Append results to dns_results.json
-def append_results(json_file, domain, expected, actual):
-    if not os.path.exists(json_file):
-        with open(json_file, 'w') as file:
-            json.dump([], file)
+# Iterate over the sites and check for DNS checks
+for site in config['sites']:
+    if 'check' in site and site['check'] == 'dns':
+        domain = site['domain']
+        expected_record = site['expected_record']
+        record_type = site['record_type']
 
-    with open(json_file, 'r') as file:
-        data = json.load(file)
+        # Run the DNS check
+        result = run_dns_check(domain, expected_record, record_type)
+        results.append(result)
 
-    # Add timestamp to each result
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+# Write the results to a JSON file
+with open('history/dns_results.json', 'w') as outfile:
+    json.dump(results, outfile, indent=4)
 
-    data.append({
-        "domain": domain,
-        "expected": expected,
-        "actual": actual,
-        "timestamp": timestamp  # Add the timestamp here
-    })
-
-    with open(json_file, 'w') as file:
-        json.dump(data, file, indent=4)
-
-def main():
-    domains = load_domains('config/domains.yml')
-    
-    # Initialize JSON file if it doesn't exist
-    if not os.path.exists('history/dns_results.json'):
-        with open('history/dns_results.json', 'w') as f:
-            json.dump([], f)
-
-    for entry in domains:
-        domain = entry['domain']
-        expected_record = entry['expected_record']
-        record_type = entry['record_type']
-
-        print(f"Running DNS check for {domain} (Type: {record_type}, Expected: {expected_record})")
-        actual_record = dns_check(domain, record_type)
-
-        print(f"Result for {domain}: {actual_record}")
-
-        append_results('dns_results.json', domain, expected_record, actual_record)
-
-if __name__ == "__main__":
-    main()
+print("DNS check completed. Results written to dns_results.json")
