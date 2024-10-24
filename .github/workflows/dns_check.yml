@@ -1,4 +1,4 @@
-  name: DNS Monitoring
+name: DNS Monitoring
 
 on:
   schedule:
