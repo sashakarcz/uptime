@@ -37,10 +37,12 @@ jobs:
           echo "## DNS Monitoring Results" > history/dns/status.md
           cat dns_results.json >> history/dns/status.md
 
-      # Remove the temporary dns_results.json file
-      - name: Clean up temporary files
+      # Remove or move untracked status file to allow branch checkout
+      - name: Remove or move untracked status file
         run: |
-          rm -f dns_results.json
+          if [ -f "history/dns/status.md" ]; then
+            rm history/dns/status.md  # Optionally move to a temp location: mv history/dns/status.md /tmp/
+          fi
 
       # Fetch and Checkout gh-pages Branch
       - name: Fetch and Checkout gh-pages Branch
@@ -48,14 +50,19 @@ jobs:
           git fetch origin gh-pages
           git checkout gh-pages
 
-      # Commit and push the updated status page to gh-pages
+      # Recreate status.md after checkout
+      - name: Recreate status.md file
+        run: |
+          mkdir -p history/dns
+          cp /tmp/status.md history/dns/status.md || true  # Copy back the file if it was moved, or recreate it
+
+      # Commit and push the DNS results to the gh-pages branch
       - name: Commit and Push Changes
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-          git add history/dns/status.md  # Only add the status file
+          git add history/dns/status.md
           git commit -m "Update DNS Monitoring Results"
           git push origin gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
