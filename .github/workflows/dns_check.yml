@@ -68,17 +68,25 @@ jobs:
             echo "$RESULT"
 
             # Extract and save the actual result to a file for Upptime (or use it in your status logic)
-            echo "{ \"domain\": \"$DOMAIN\", \"expected\": \"$EXPECTED\", \"actual\": \"$RESULT\" }" >> history/dns_results.json
+            echo "{ \"domain\": \"$DOMAIN\", \"expected\": \"$EXPECTED\", \"actual\": \"$RESULT\" }" >> dns_results.json
 
           done
 
-      # Commit and push the DNS results to the repository
+ # Write DNS Results to Status Page
+      - name: Write DNS Results to Status Page
+        run: |
+          mkdir -p history/dns
+          echo "## DNS Monitoring Results" > history/dns/status.md
+          cat dns_results.json >> history/dns/status.md
+
+      # Commit and push the DNS results to the gh-pages branch
       - name: Commit and Push Changes
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-          git add history/dns_results.json
-          git commit -m "Update DNS Results"
-          git push origin master
+          git checkout gh-pages
+          git add history/dns/status.md
+          git commit -m "Update DNS Monitoring Results"
+          git push origin gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
