@@ -7,6 +7,7 @@ This repository contains the open-source uptime monitor and status page for [Sas
 [![Graphs CI](https://github.com/sashakarcz/uptime/workflows/Graphs%20CI/badge.svg)](https://github.com/sashakarcz/uptime/actions?query=workflow%3A%22Graphs+CI%22)
 [![Static Site CI](https://github.com/sashakarcz/uptime/workflows/Static%20Site%20CI/badge.svg)](https://github.com/sashakarcz/uptime/actions?query=workflow%3A%22Static+Site+CI%22)
 [![Summary CI](https://github.com/sashakarcz/uptime/workflows/Summary%20CI/badge.svg)](https://github.com/sashakarcz/uptime/actions?query=workflow%3A%22Summary+CI%22)
+[![DNS Monitoring](https://github.com/sashakarcz/uptime/actions/workflows/dns_check.yml/badge.svg)](https://github.com/sashakarcz/uptime/actions/workflows/dns_check.yml)
 
 With [Upptime](https://upptime.js.org), you can get your own unlimited and free uptime monitor and status page, powered entirely by a GitHub repository. We use [Issues](https://github.com/sashakarcz/uptime/issues) as incident reports, [Actions](https://github.com/sashakarcz/uptime/actions) as uptime monitors, and [Pages](https://dns-monitor.sashakarcz.com) for the status page.
 
