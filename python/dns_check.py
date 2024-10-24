@@ -53,8 +53,8 @@ def main():
     domains = load_domains('config/domains.yml')
     
     # Initialize JSON file if it doesn't exist
-    if not os.path.exists('dns_results.json'):
-        with open('dns_results.json', 'w') as f:
+    if not os.path.exists('history/dns/dns_results.json'):
+        with open('history/dns/dns_results.json', 'w') as f:
             json.dump([], f)
 
     for entry in domains:
