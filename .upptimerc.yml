@@ -13,7 +13,6 @@ sites:
     url: https://news.ycombinator.com
 
 status-website:
-  cname: dns-monitor.sashakarcz.com
   name: DNS Monitoring Status
   introTitle: "**DNS Monitoring Status Page**"
   introMessage: This page shows the real-time status of our DNS and service monitoring.
