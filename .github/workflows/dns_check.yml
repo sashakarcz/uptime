@@ -37,14 +37,7 @@ jobs:
           echo "## DNS Monitoring Results" > history/dns/status.md
           cat dns_results.json >> history/dns/status.md
           rm dns_results.json
-
-      # Remove or move untracked status file to allow branch checkout
-      - name: Remove or move untracked status file
-        run: |
-          if [ -f "history/dns/status.md" ]; then
-            rm history/dns/status.md
-          fi
-
+      
       # Fetch and Checkout gh-pages Branch
       - name: Fetch and Checkout gh-pages Branch
         run: |
