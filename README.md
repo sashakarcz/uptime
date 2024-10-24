@@ -1,6 +1,6 @@
 # [📈 Live Status](https://dns-monitor.sashakarcz.com): <!--live status--> **🟩 All systems operational**
 
-This repository contains the open-source uptime monitor and status page for [Sasha Karcz](https://dns-monitor.sashakarcz.com), powered by [Upptime](https://github.com/upptime/upptime).
+This repository contains the open-source uptime monitor and status page for Some Place.
 
 [![Uptime CI](https://github.com/sashakarcz/uptime/workflows/Uptime%20CI/badge.svg)](https://github.com/sashakarcz/uptime/actions?query=workflow%3A%22Uptime+CI%22)
 [![Response Time CI](https://github.com/sashakarcz/uptime/workflows/Response%20Time%20CI/badge.svg)](https://github.com/sashakarcz/uptime/actions?query=workflow%3A%22Response+Time+CI%22)
