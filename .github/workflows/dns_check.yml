@@ -52,6 +52,7 @@ jobs:
       - name: Loop through and check DNS
         run: |
          domains=$(cat domain_list.json)
+          echo "[]" > dns_results.json  # Initialize the results file as an empty JSON array
           for row in $(echo "${domains}" | jq -r '.[]'); do
             DOMAIN=$(echo "$row" | jq -r '.domain')
             EXPECTED=$(echo "$row" | jq -r '.expected_record')
@@ -65,8 +66,8 @@ jobs:
             # Debugging: Print the DNS result
             echo "DNS result for $DOMAIN: $RESULT"
             
-            # Ensure the result is JSON-safe and write to file
-            echo -n "{ \"domain\": \"$DOMAIN\", \"expected\": \"$EXPECTED\", \"actual\": \"$RESULT\" }" >> dns_results.json
+            # Ensure the result is JSON-safe and append to the results array
+            jq ". + [{ \"domain\": \"$DOMAIN\", \"expected\": \"$EXPECTED\", \"actual\": \"$RESULT\" }]" dns_results.json > tmp.json && mv tmp.json dns_results.json
           done
           
       # Write DNS Results to Status Page
