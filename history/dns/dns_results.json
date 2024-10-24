@@ -3,18 +3,18 @@
         "domain": "example.com",
         "expected": "93.184.216.34",
         "actual": "93.184.215.14",
-        "timestamp": "2024-10-24 21:19:37"
+        "timestamp": "2024-10-24 21:29:34"
     },
     {
         "domain": "test.com",
         "expected": "192.0.2.1",
-        "actual": "34.224.149.186\n3.18.255.247",
-        "timestamp": "2024-10-24 21:19:37"
+        "actual": "3.18.255.247\n34.224.149.186",
+        "timestamp": "2024-10-24 21:29:34"
     },
     {
         "domain": "mail.example.com",
         "expected": "mail.example.net",
         "actual": "",
-        "timestamp": "2024-10-24 21:19:37"
+        "timestamp": "2024-10-24 21:29:34"
     }
 ]
