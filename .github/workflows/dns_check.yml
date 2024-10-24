@@ -29,13 +29,17 @@ jobs:
       - name: Run DNS Check Python Script
         run: |
           python3 python/dns_check.py
-          mv dns_results.json history/dns/
 
       # Fetch and Checkout gh-pages Branch
       - name: Fetch and Checkout gh-pages Branch
         run: |
           git fetch origin gh-pages
           git checkout gh-pages
+
+      # Move dns_results
+      - name: Add DNS results to gh-pages
+        run: |
+          mv dns_results.json history/dns/dns_results.json
 
       # Commit and push the DNS results to the gh-pages branch
       - name: Commit and Push Changes
