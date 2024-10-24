@@ -12,19 +12,6 @@ sites:
   - name: Hacker News
     url: https://news.ycombinator.com
 
-  # DNS Monitoring Example
-  - name: DNS Check for example.com
-    domain: example.com
-    expected_record: 93.184.216.34
-    record_type: A
-    check: "dns"
-
-  - name: DNS Check for example.org
-    domain: example.org
-    expected_record: mail.example.net
-    record_type: CNAME
-    check: "dns"
-
 status-website:
   cname: dns-monitor.sashakarcz.com
   name: DNS Monitoring Status
