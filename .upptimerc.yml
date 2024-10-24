@@ -3,10 +3,6 @@
 owner: sashakarcz  # Your GitHub username
 repo: uptime       # Your repository name
 
-# Change these first
-owner: upptime # Your GitHub organization or username, where this repository lives
-repo: upptime # The name of this repository
-
 sites:
   - name: Google
     url: https://www.google.com
