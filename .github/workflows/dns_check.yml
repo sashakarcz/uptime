@@ -37,6 +37,11 @@ jobs:
           echo "## DNS Monitoring Results" > history/dns/status.md
           cat dns_results.json >> history/dns/status.md
 
+      # Remove or stash untracked file to allow checkout
+      - name: Remove or stash untracked files
+        run: |
+          git rm -f history/dns/status.md || git stash --include-untracked
+
       # Fetch the gh-pages branch and switch to it
       - name: Fetch and Checkout gh-pages Branch
         run: |
@@ -53,3 +58,4 @@ jobs:
           git push origin gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
