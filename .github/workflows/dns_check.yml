@@ -15,78 +15,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Create Dockerfile using Alpine and install yq and bind-tools
-      - name: Create Dockerfile for DNS and YAML Parsing
+      # Install Python and dependencies
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
         run: |
-          cat << 'EOF' > Dockerfile
-          FROM alpine:latest
-          RUN apk --no-cache add bind-tools \
-              && wget https://github.com/mikefarah/yq/releases/download/v4.24.5/yq_linux_amd64 \
-              && chmod +x yq_linux_amd64 && mv yq_linux_amd64 /usr/local/bin/yq
+          pip install pyyaml
 
-          CMD ["sh", "-c", "result=$(dig +short $DOMAIN $RECORD_TYPE); \
-                         echo \"DNS check for domain: $DOMAIN\"; \
-                         echo \"Expected: $EXPECTED_RECORD, Got: $result\"; \
-                         if [ \"$result\" = \"$EXPECTED_RECORD\" ]; then \
-                           echo 'DNS check passed'; \
-                         else \
-                           echo 'DNS check failed: Got $result, expected $EXPECTED_RECORD'; \
-                         fi"]
-          EOF
-
-      # Build the Alpine-based Docker Image with yq
-      - name: Build Docker Image for DNS Check
+      # Run Python DNS check script
+      - name: Run DNS Check Python Script
         run: |
-          docker build -t dns-check-action .
+          python dns_check.py
 
-      # Read the YAML file and convert it to JSON using yq inside the container
-      - name: Parse config/domains.yml to JSON
-        run: |
-          docker run --rm -v $(pwd)/config/domains.yml:/domains.yml dns-check-action /usr/local/bin/yq e '.domains' domains.yml -o=json > domain_list.json
-          
-      # Debugging: Print the contents of domain_list.json
-      - name: Debug domain_list.json
-        run: |
-          cat domain_list.json
-
-      - name: Loop through and check DNS
-        run: |
-          domains=$(cat domain_list.json)
-          echo "[]" > dns_results.json  # Initialize the results file as an empty JSON array
-          for row in $(echo "${domains}" | jq -r '.[]'); do
-            DOMAIN=$(echo "$row" | jq -r '.domain')
-            EXPECTED=$(echo "$row" | jq -r '.expected_record')
-            TYPE=$(echo "$row" | jq -r '.record_type')
-
-            echo "Running DNS check for $DOMAIN (Type: $TYPE, Expected: $EXPECTED)"
-
-            # Run DNS check and capture the result
-            RESULT=$(docker run --rm -e DOMAIN=$DOMAIN -e EXPECTED_RECORD=$EXPECTED -e RECORD_TYPE=$TYPE dns-check-action)
-
-            # Debugging: Print the DNS result and ensure it's not empty
-            echo "DNS result for $DOMAIN: $RESULT"
-
-            if [ -z "$RESULT" ]; then
-              echo "Error: DNS check for $DOMAIN failed or returned an empty result."
-              RESULT="ERROR: Invalid or empty result"
-            fi
-
-            # Strip any unwanted newlines or invalid characters from the result
-            RESULT=$(echo "$RESULT" | tr -d '\n' | tr -d '\r' | sed 's/\"/\\"/g')
-
-            # Debugging: Print the cleaned result before appending
-            echo "Cleaned result for $DOMAIN: $RESULT"
-
-            # Append valid result to the results array using jq
-            echo "Appending result for $DOMAIN: {\"domain\": \"$DOMAIN\", \"expected\": \"$EXPECTED\", \"actual\": \"$RESULT\"}"
-
-            # Ensure proper JSON handling
-            jq ". + [{ \"domain\": \"$DOMAIN\", \"expected\": \"$EXPECTED\", \"actual\": \"$RESULT\" }]" dns_results.json > tmp.json && mv tmp.json dns_results.json
-
-          done
-
-
-     
       # Write DNS Results to Status Page
       - name: Write DNS Results to Status Page
         run: |
