@@ -40,10 +40,10 @@ jobs:
           docker build -t dns-check-action .
 
       # Read the YAML file and convert it to JSON using yq inside the container
-      - name: Parse .upptimerc.yml to JSON
+      - name: Parse config/domains.yml to JSON
         run: |
-          docker run --rm -v $(pwd)/.upptimerc.yml:/domains.yml dns-check-action /usr/local/bin/yq e '[.sites[] | select(.check == "dns")]' domains.yml -o=json > domain_list.json
-
+          docker run --rm -v $(pwd)/config/domains.yml:/domains.yml dns-check-action /usr/local/bin/yq e '.domains' domains.yml -o=json > domain_list.json
+          
       # Debugging: Print the contents of domain_list.json
       - name: Debug domain_list.json
         run: |
