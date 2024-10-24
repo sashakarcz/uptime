@@ -40,9 +40,9 @@ jobs:
           docker build -t dns-check-action .
 
       # Read the YAML file and convert it to JSON using yq inside the container
-      - name: Parse domains.yml to JSON
+      - name: Parse .upptimerc.yml to JSON
         run: |
-          docker run --rm -v $(pwd)/.upptimerc.yml:/domains.yml dns-check-action /usr/local/bin/yq e '.sites[] | select(.check == "dns")' domains.yml -o=json >> domain_list.json
+          docker run --rm -v $(pwd)/.upptimerc.yml:/domains.yml dns-check-action /usr/local/bin/yq e '[.sites[] | select(.check == "dns")]' domains.yml -o=json > domain_list.json
 
       # Debugging: Print the contents of domain_list.json
       - name: Debug domain_list.json
@@ -53,13 +53,10 @@ jobs:
       - name: Loop through and check DNS
         run: |
           domains=$(cat domain_list.json)
-          for row in $(echo "${domains}" | jq -r '.[] | @base64'); do
-            _jq() {
-              echo ${row} | base64 --decode | jq -r ${1}
-            }
-            DOMAIN=$(_jq '.domain')
-            EXPECTED=$(_jq '.expected_record')
-            TYPE=$(_jq '.record_type')
+          for row in $(echo "${domains}" | jq -r '.[]'); do
+            DOMAIN=$(echo "$row" | jq -r '.domain')
+            EXPECTED=$(echo "$row" | jq -r '.expected_record')
+            TYPE=$(echo "$row" | jq -r '.record_type')
 
             # Run DNS check and capture the result
             RESULT=$(docker run --rm -e DOMAIN=$DOMAIN -e EXPECTED_RECORD=$EXPECTED -e RECORD_TYPE=$TYPE dns-check-action)
@@ -72,14 +69,14 @@ jobs:
 
           done
 
- # Write DNS Results to Status Page
+      # Write DNS Results to Status Page
       - name: Write DNS Results to Status Page
         run: |
           mkdir -p history/dns
           echo "## DNS Monitoring Results" > history/dns/status.md
           cat dns_results.json >> history/dns/status.md
 
- # Fetch the gh-pages branch and switch to it
+      # Fetch the gh-pages branch and switch to it
       - name: Fetch and Checkout gh-pages Branch
         run: |
           git fetch origin gh-pages
@@ -90,7 +87,6 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-          git checkout gh-pages
           git add history/dns/status.md
           git commit -m "Update DNS Monitoring Results"
           git push origin gh-pages
