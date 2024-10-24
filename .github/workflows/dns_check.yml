@@ -34,15 +34,15 @@ jobs:
                          fi"]
           EOF
 
-            # Build the Alpine-based Docker Image with yq
+      # Build the Alpine-based Docker Image with yq
       - name: Build Docker Image for DNS Check
         run: |
           docker build -t dns-check-action .
 
       # Read the YAML file and convert it to JSON using yq inside the container
-      - name: Parse domains.yml to JSON
+      - name: Parse config/domains.yml to JSON
         run: |
-          docker run --rm -v $(pwd)/config/domains.yml:/domains.yml dns-check-action /usr/local/bin/yq e '.domains' -o=json /domains.yml > domain_list.json
+          docker run --rm -v $(pwd)/config/domains.yml:/domains.yml dns-check-action /usr/local/bin/yq e '.domains' domains.yml -o=json > domain_list.json
 
       # Debugging: Print the contents of domain_list.json
       - name: Debug domain_list.json
@@ -53,22 +53,33 @@ jobs:
       - name: Loop through and check DNS
         run: |
           domains=$(cat domain_list.json)
-          for row in $(echo "${domains}" | jq -r '.[] | @base64'); do
-            _jq() {
-              echo ${row} | base64 --decode | jq -r ${1}
-            }
-            DOMAIN=$(_jq '.domain')
-            EXPECTED=$(_jq '.expected_record')
-            TYPE=$(_jq '.record_type')
+          echo "[]" > dns_results.json  # Initialize the results file as an empty JSON array
+          for row in $(echo "${domains}" | jq -r '.[]'); do
+            DOMAIN=$(echo "$row" | jq -r '.domain')
+            EXPECTED=$(echo "$row" | jq -r '.expected_record')
+            TYPE=$(echo "$row" | jq -r '.record_type')
+
+            echo "Running DNS check for $DOMAIN (Type: $TYPE, Expected: $EXPECTED)"
 
             # Run DNS check and capture the result
             RESULT=$(docker run --rm -e DOMAIN=$DOMAIN -e EXPECTED_RECORD=$EXPECTED -e RECORD_TYPE=$TYPE dns-check-action)
 
-            # Output the DNS result
-            echo "$RESULT"
+            # Debugging: Print the DNS result
+            echo "DNS result for $DOMAIN: $RESULT"
 
-            # Extract and save the actual result to a file for Upptime (or use it in your status logic)
-            echo "{ \"domain\": \"$DOMAIN\", \"expected\": \"$EXPECTED\", \"actual\": \"$RESULT\" }" >> dns_results.json
+            # Ensure the result is not empty or invalid
+            if [ -z "$RESULT" ]; then
+              echo "Error: DNS check for $DOMAIN failed or returned an empty result."
+              RESULT="ERROR: Invalid or empty result"
+            fi
+
+            # Ensure the result does not contain any newlines or invalid characters
+            RESULT=$(echo "$RESULT" | tr -d '\n')
+
+            # Append valid result to the results array using jq
+            echo "Appending result for $DOMAIN: {\"domain\": \"$DOMAIN\", \"expected\": \"$EXPECTED\", \"actual\": \"$RESULT\"}"
+
+            jq ". + [{ \"domain\": \"$DOMAIN\", \"expected\": \"$EXPECTED\", \"actual\": \"$RESULT\" }]" dns_results.json > tmp.json && mv tmp.json dns_results.json
 
           done
 
@@ -78,6 +89,11 @@ jobs:
           mkdir -p history/dns
           echo "## DNS Monitoring Results" > history/dns/status.md
           cat dns_results.json >> history/dns/status.md
+
+      # Remove or stash untracked file to allow checkout
+      - name: Remove untracked files
+        run: |
+          git rm -f history/dns/status.md || git stash --include-untracked
 
       # Fetch the gh-pages branch and switch to it
       - name: Fetch and Checkout gh-pages Branch
