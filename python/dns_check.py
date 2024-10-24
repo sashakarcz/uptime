@@ -2,6 +2,7 @@ import json
 import subprocess
 import yaml
 import os
+from datetime import datetime
 
 # Load domains from YAML file
 def load_domains(yaml_file):
@@ -35,10 +36,14 @@ def append_results(json_file, domain, expected, actual):
     with open(json_file, 'r') as file:
         data = json.load(file)
 
+    # Add timestamp to each result
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
     data.append({
         "domain": domain,
         "expected": expected,
-        "actual": actual
+        "actual": actual,
+        "timestamp": timestamp  # Add the timestamp here
     })
 
     with open(json_file, 'w') as file:
@@ -66,4 +71,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
