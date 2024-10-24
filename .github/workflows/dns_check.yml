@@ -28,7 +28,7 @@ jobs:
       # Run Python DNS check script
       - name: Run DNS Check Python Script
         run: |
-          python dns_check.py
+          python3 python/dns_check.py
 
       # Write DNS Results to Status Page
       - name: Write DNS Results to Status Page
