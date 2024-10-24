@@ -20,11 +20,6 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-       
-      # Remove or stash untracked file to allow checkout
-      - name: Remove or stash untracked files
-        run: |
-          git rm -f history/dns/status.md || git stash --include-untracked
 
       - name: Install dependencies
         run: |
@@ -33,7 +28,7 @@ jobs:
       # Run Python DNS check script
       - name: Run DNS Check Python Script
         run: |
-          python3 python/dns_check.py
+          python dns_check.py
 
       # Write DNS Results to Status Page
       - name: Write DNS Results to Status Page
@@ -42,7 +37,14 @@ jobs:
           echo "## DNS Monitoring Results" > history/dns/status.md
           cat dns_results.json >> history/dns/status.md
 
-      # Fetch the gh-pages branch and switch to it
+      # Remove the untracked file to allow checkout
+      - name: Remove untracked status file
+        run: |
+          if [ -f "history/dns/status.md" ]; then
+            rm history/dns/status.md
+          fi
+
+      # Fetch and Checkout gh-pages Branch
       - name: Fetch and Checkout gh-pages Branch
         run: |
           git fetch origin gh-pages
@@ -58,4 +60,3 @@ jobs:
           git push origin gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
