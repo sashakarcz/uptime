@@ -41,14 +41,3 @@ With [Upptime](https://upptime.js.org), you can get your own unlimited and free 
 | example.com      | Up     | 93.184.215.14                 | 93.184.215.14                 | 2024-10-25T15:09:54.965779 |
 | test.com         | Down   | 192.0.2.1                     | 34.224.149.186, 3.18.255.247  | 2024-10-25T15:09:54.996896 |
 | mail.example.com | Down   | mail.example.net              | No record found               | 2024-10-25T15:09:55.031086 |
-
-### DNS Check on 2024-10-25T15:11:06.731548
-
-## Live DNS Status
-
-| Domain           | Status | Expected                      | Actual                        | Timestamp                  |
-| ---------------- | ------ | ----------------------------- | ----------------------------- | -------------------------- |
-| hidewall.io      | Up     | 104.21.32.197, 172.67.154.114 | 104.21.32.197, 172.67.154.114 | 2024-10-25T15:11:06.565558 |
-| example.com      | Up     | 93.184.215.14                 | 93.184.215.14                 | 2024-10-25T15:11:06.578634 |
-| test.com         | Down   | 192.0.2.1                     | 34.224.149.186, 3.18.255.247  | 2024-10-25T15:11:06.671909 |
-| mail.example.com | Down   | mail.example.net              | No record found               | 2024-10-25T15:11:06.728089 |
