@@ -4,7 +4,7 @@
   expected:
   - 93.184.216.34
   status: Down
-  timestamp: '2024-10-25T14:29:33.155984'
+  timestamp: '2024-10-25T14:33:38.500326'
 - actual:
   - 34.224.149.186
   - 3.18.255.247
@@ -12,11 +12,11 @@
   expected:
   - 192.0.2.1
   status: Down
-  timestamp: '2024-10-25T14:29:33.179657'
+  timestamp: '2024-10-25T14:33:38.528025'
 - actual:
   - No record found
   domain: mail.example.com
   expected:
   - mail.example.net
   status: Down
-  timestamp: '2024-10-25T14:29:33.212737'
+  timestamp: '2024-10-25T14:33:38.555826'
