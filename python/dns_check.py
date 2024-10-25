@@ -107,12 +107,8 @@ for res in results:
 with open('README.md', 'r+') as readme_file:
     readme_content = readme_file.read()
     # Insert new DNS status table
-    updated_content = re.sub(
-        r"(## Live DNS Status\n\n\| Domain[^\n]+\n(?:\|[^\n]+\n)*)",
-        dns_results_md,
-        readme_content,
-        flags=re.DOTALL
-    )
+    readme_file.write(f"\n### DNS Check on {datetime.utcnow().isoformat()}\n\n")
+    readme_file.write(dns_results_md)
     readme_file.seek(0)
     readme_file.write(updated_content)
     readme_file.truncate()
