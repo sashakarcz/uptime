@@ -10,7 +10,7 @@ on:
 jobs:
   dns_check:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -30,11 +30,22 @@ jobs:
         run: |
           python3 python/dns_check.py
 
+      # Stash any untracked or modified files, including DNS results
+      - name: Stash changes before switching branches
+        run: |
+          git add history/dns_results.json
+          git stash --include-untracked
+
       # Fetch and Checkout gh-pages Branch
       - name: Fetch and Checkout gh-pages Branch
         run: |
           git fetch origin gh-pages
           git checkout gh-pages
+
+      # Apply stashed changes
+      - name: Apply stashed changes
+        run: |
+          git stash pop
 
       # Commit and push the DNS results to the gh-pages branch
       - name: Commit and Push Changes
