@@ -109,9 +109,6 @@ with open('README.md', 'r+') as readme_file:
     # Insert new DNS status table
     readme_file.write(f"\n### DNS Check on {datetime.utcnow().isoformat()}\n\n")
     readme_file.write(dns_results_md)
-    readme_file.seek(0)
-    readme_file.write(updated_content)
-    readme_file.truncate()
 
 # Write current results to dns_status.md
 with open('history/dns_status.md', 'w') as status_file:
