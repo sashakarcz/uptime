@@ -11,6 +11,10 @@ sites:
     url: https://en.wikipedia.org
   - name: Hacker News
     url: https://news.ycombinator.com
+  - name: Example
+    url: https://example.com
+  - name: Test Site
+    url: https://test.com
 
   # DNS Monitoring Configuration
 dns:
