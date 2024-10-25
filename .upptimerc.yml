@@ -12,6 +12,22 @@ sites:
   - name: Hacker News
     url: https://news.ycombinator.com
 
+  # DNS Monitoring Configuration
+dns:
+  domains:
+    - domain: example.com
+      expected_record: 
+        - 93.184.216.34
+      record_type: A
+    - domain: test.com
+      expected_record: 
+        - 192.0.2.1
+      record_type: A
+    - domain: mail.example.com
+      expected_record: 
+        - mail.example.net
+      record_type: CNAME
+
 status-website:
   # Add your custom domain name, or remove the `cname` line if you don't have a domain
   # Uncomment the `baseUrl` line if you don't have a custom domain and add your repo name there
