@@ -3,17 +3,17 @@
     - 93.184.215.14
     expected:
     - 93.184.216.34
-    timestamp: '2024-10-25 12:48:14.016010'
+    timestamp: '2024-10-25 13:02:51.428628'
 - test.com:
     actual:
-    - 34.224.149.186
     - 3.18.255.247
+    - 34.224.149.186
     expected:
     - 192.0.2.1
-    timestamp: '2024-10-25 12:48:14.294498'
+    timestamp: '2024-10-25 13:02:51.450617'
 - mail.example.com:
     actual:
     - ''
     expected:
     - mail.example.net
-    timestamp: '2024-10-25 12:48:14.327290'
+    timestamp: '2024-10-25 13:02:51.498499'
