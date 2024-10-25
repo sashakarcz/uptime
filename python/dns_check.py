@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 # Load the .upptimerc.yml file
-with open('.upptimerc.yml', 'r') as file:
+with open('config/domains.yml', 'r') as file:
     config = yaml.safe_load(file)
 
 # Initialize the results array
