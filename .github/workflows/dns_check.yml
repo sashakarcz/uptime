@@ -10,7 +10,7 @@ on:
 jobs:
   dns_check:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -29,11 +29,6 @@ jobs:
       - name: Run DNS Check Python Script
         run: |
           python3 python/dns_check.py
-
-      # Fetch and Checkout gh-pages Branch
-      - name: Stash untracked files
-      run: |
-        git stash --include-untracked
 
       # Fetch and Checkout gh-pages Branch
       - name: Fetch and Checkout gh-pages Branch
