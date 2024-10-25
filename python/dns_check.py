@@ -14,10 +14,10 @@ def run_dns_check(domain, expected_record, record_type):
     print(f"Running DNS check for {domain} (Type: {record_type}, Expected: {expected_record})")
     try:
         # Run the dig command to get the DNS record
-        result = subprocess.check_output(["dig", "+short", domain, record_type], text=True).strip()
+        result = subprocess.check_output(["dig", "+short", domain, record_type], text=True).strip().splitlines()
 
-        if not result:
-            result = "No record found"
+        # Join multiple results into a single space-separated string
+        result = " ".join(result) if result else "No record found"
 
         # Compare the result with the expected record
         if result == expected_record:
@@ -25,11 +25,11 @@ def run_dns_check(domain, expected_record, record_type):
         else:
             print(f"DNS check failed for {domain}. Got {result}, expected {expected_record}")
 
-        return {"domain": domain, "expected": expected_record, "actual": result, "timestamp": str(datetime.utcnow())}
+        return {"domain": domain, "expected": expected_record, "actual": result, "timestamp": str(datetime.now())}
 
     except subprocess.CalledProcessError as e:
         print(f"Error during DNS check for {domain}: {str(e)}")
-        return {"domain": domain, "expected": expected_record, "actual": "Error", "timestamp": str(datetime.utcnow())}
+        return {"domain": domain, "expected": expected_record, "actual": "Error", "timestamp": str(datetime.now())}
 
 # Iterate over the DNS entries in config/domains.yml
 for entry in config['domains']:
