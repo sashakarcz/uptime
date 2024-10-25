@@ -17,6 +17,12 @@ sites:
     url: https://test.com
 
   # DNS Monitoring Configuration
+  - name: DNS Check - hidewall.io
+    url: https://hidewall.io
+    domain: hidewall.io
+    expected_record:
+      - 104.21.32.197
+      - 172.67.154.114 
   - name: DNS Check - example.com
     url: http://dns-check.example.com
     domain: example.com
