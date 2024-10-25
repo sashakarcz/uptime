@@ -4,39 +4,37 @@ owner: sashakarcz  # Your GitHub username
 repo: uptime       # Your repository name
 
 sites:
-  # URL-based and DNS-based checks combined
+  # URL-based checks
   - name: Google
     url: https://www.google.com
-
   - name: Wikipedia
     url: https://en.wikipedia.org
-
   - name: Hacker News
     url: https://news.ycombinator.com
-
   - name: Example
     url: https://example.com
-    dns:
-      domain: example.com
-      expected_record:
-        - 93.184.216.34
-      record_type: A
-
   - name: Test Site
     url: https://test.com
-    dns:
-      domain: test.com
-      expected_record:
-        - 192.0.2.1
-      record_type: A
 
-  - name: Mail Example
-    url: https://mail.example.com
-    dns:
-      domain: mail.example.com
-      expected_record:
-        - mail.example.net
-      record_type: CNAME
+  # DNS Monitoring Configuration
+  - name: DNS Check - example.com
+    url: http://dns-check.example.com
+    domain: example.com
+    expected_record:
+      - 93.184.216.34
+    record_type: A
+  - name: DNS Check - test.com
+    url: http://dns-check.test.com
+    domain: test.com
+    expected_record:
+      - 192.0.2.1
+    record_type: A
+  - name: DNS Check - mail.example.com
+    url: http://dns-check.mail.example.com
+    domain: mail.example.com
+    expected_record:
+      - mail.example.net
+    record_type: CNAME
 
 status-website:
   # Add your custom domain name, or remove the `cname` line if you don't have a domain
