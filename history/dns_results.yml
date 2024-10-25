@@ -3,20 +3,20 @@
   domain: example.com
   expected:
   - 93.184.216.34
-  status: Failed
-  timestamp: '2024-10-25T14:22:05.510512'
+  status: Down
+  timestamp: '2024-10-25T14:29:33.155984'
 - actual:
-  - 3.18.255.247
   - 34.224.149.186
+  - 3.18.255.247
   domain: test.com
   expected:
   - 192.0.2.1
-  status: Failed
-  timestamp: '2024-10-25T14:22:05.557798'
+  status: Down
+  timestamp: '2024-10-25T14:29:33.179657'
 - actual:
   - No record found
   domain: mail.example.com
   expected:
   - mail.example.net
-  status: Failed
-  timestamp: '2024-10-25T14:22:05.602078'
+  status: Down
+  timestamp: '2024-10-25T14:29:33.212737'

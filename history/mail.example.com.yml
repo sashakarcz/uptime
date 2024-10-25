@@ -1,0 +1,11 @@
+code: 0
+expected:
+- mail.example.net
+generator: Upptime <https://github.com/upptime/upptime>
+lastUpdated: '2024-10-25T14:29:33.212737'
+responseTime: 0
+result:
+- No record found
+startTime: '2024-10-25T14:29:32.753232'
+status: down
+url: http://dns-check.mail.example.com
