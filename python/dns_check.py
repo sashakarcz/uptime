@@ -22,17 +22,29 @@ def run_dns_check(domain, expected_record, record_type):
             # Split the result into a list if there are multiple entries
             result = result.splitlines()
 
-        # Compare the result with the expected record
+        # Check if the expected record is in the result
         if expected_record in result:
             print(f"DNS check passed for {domain}")
         else:
             print(f"DNS check failed for {domain}. Got {result}, expected {expected_record}")
 
-        return {"domain": domain, "expected": expected_record, "actual": result, "timestamp": str(datetime.utcnow())}
+        return {
+            domain: {
+                "expected": expected_record,
+                "actual": result if isinstance(result, list) else [result],
+                "timestamp": str(datetime.utcnow())
+            }
+        }
 
     except subprocess.CalledProcessError as e:
         print(f"Error during DNS check for {domain}: {str(e)}")
-        return {"domain": domain, "expected": expected_record, "actual": "Error", "timestamp": str(datetime.utcnow())}
+        return {
+            domain: {
+                "expected": expected_record,
+                "actual": "Error",
+                "timestamp": str(datetime.utcnow())
+            }
+        }
 
 # Iterate over the DNS entries in config/domains.yml
 for entry in config['domains']:
@@ -45,7 +57,7 @@ for entry in config['domains']:
     results.append(result)
 
 # Write the results to a YAML file
-with open('history/dns_results.yaml', 'w') as outfile:
+with open('history/dns_results.yml', 'w') as outfile:
     yaml.dump(results, outfile, default_flow_style=False)
 
-print("DNS check completed. Results written to history/dns_results.yaml")
+print("DNS check completed. Results written to history/dns_results.yml")
