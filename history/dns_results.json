@@ -3,18 +3,18 @@
         "domain": "example.com",
         "expected": "93.184.216.34",
         "actual": "93.184.215.14",
-        "timestamp": "2024-10-25 04:08:50.640970"
+        "timestamp": "2024-10-25 04:10:52.016188"
     },
     {
         "domain": "test.com",
         "expected": "192.0.2.1",
-        "actual": "34.224.149.186\n3.18.255.247",
-        "timestamp": "2024-10-25 04:08:50.875444"
+        "actual": "3.18.255.247\n34.224.149.186",
+        "timestamp": "2024-10-25 04:10:52.123088"
     },
     {
         "domain": "mail.example.com",
         "expected": "mail.example.net",
         "actual": "No record found",
-        "timestamp": "2024-10-25 04:08:50.958316"
+        "timestamp": "2024-10-25 04:10:52.165337"
     }
 ]
