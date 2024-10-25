@@ -31,6 +31,7 @@ sites:
       record_type: A
 
   - name: Mail Example
+    url: https://mail.example.com
     dns:
       domain: mail.example.com
       expected_record:
