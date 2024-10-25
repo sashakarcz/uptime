@@ -56,5 +56,15 @@ with open('history/dns_status.md', 'w') as md_file:
             f"| {res['domain']} | {res['status']} | {', '.join(res['expected'])} | {', '.join(res['actual'])} | {res['timestamp']} |\n"
         )
 
+# Append the DNS monitoring status to README.md
+with open('README.md', 'a') as readme_file:
+    readme_file.write("\n\n## Latest DNS Monitoring Status\n")
+    readme_file.write("| Domain           | Status     | Expected         | Actual           | Timestamp              |\n")
+    readme_file.write("|------------------|------------|------------------|------------------|------------------------|\n")
+    for res in results:
+        readme_file.write(
+            f"| {res['domain']} | {res['status']} | {', '.join(res['expected'])} | {', '.join(res['actual'])} | {res['timestamp']} |\n"
+        )
+
 print("DNS check completed. Results written to history/dns_status.md")
 
