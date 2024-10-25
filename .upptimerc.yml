@@ -4,31 +4,36 @@ owner: sashakarcz  # Your GitHub username
 repo: uptime       # Your repository name
 
 sites:
-  # URL-based checks
+  # URL-based and DNS-based checks combined
   - name: Google
     url: https://www.google.com
+
   - name: Wikipedia
     url: https://en.wikipedia.org
+
   - name: Hacker News
     url: https://news.ycombinator.com
+
   - name: Example
     url: https://example.com
-  - name: Test Site
-    url: https://test.com
-
-  # DNS Monitoring Configuration
-dns:
-  domains:
-    - domain: example.com
-      expected_record: 
+    dns:
+      domain: example.com
+      expected_record:
         - 93.184.216.34
       record_type: A
-    - domain: test.com
-      expected_record: 
+
+  - name: Test Site
+    url: https://test.com
+    dns:
+      domain: test.com
+      expected_record:
         - 192.0.2.1
       record_type: A
-    - domain: mail.example.com
-      expected_record: 
+
+  - name: Mail Example
+    dns:
+      domain: mail.example.com
+      expected_record:
         - mail.example.net
       record_type: CNAME
 

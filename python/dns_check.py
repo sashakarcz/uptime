@@ -3,11 +3,11 @@ import yaml
 import subprocess
 from datetime import datetime
 
-# Load the config/domains.yml or .upptimerc.yml file
-with open('config/domains.yml', 'r') as file:  # or .upptimerc.yml
+# Load the combined config file
+with open('.upptimerc.yml', 'r') as file:
     config = yaml.safe_load(file)
 
-# Initialize the results array
+# Initialize results array
 results = []
 
 # Function to run a DNS check
@@ -37,29 +37,35 @@ def run_dns_check(domain, expected_record, record_type):
             "timestamp": str(datetime.utcnow())
         }
 
-# Run checks and collect results
-for entry in config['domains']:
-    domain = entry['domain']
-    expected_record = entry['expected_record'] if isinstance(entry['expected_record'], list) else [entry['expected_record']]
-    record_type = entry['record_type']
-    results.append(run_dns_check(domain, expected_record, record_type))
+# Iterate over the `sites` key in the config
+for entry in config['sites']:
+    if 'dns' in entry:  # Check if the entry is a DNS-based check
+        domain = entry['dns']['domain']
+        expected_record = entry['dns']['expected_record']
+        record_type = entry['dns']['record_type']
+        results.append(run_dns_check(domain, expected_record, record_type))
 
 # Format results in markdown
-dns_results_md = "## Live Status\n\n| Domain           | Status     | Expected         | Actual           | Timestamp              |\n"
+dns_results_md = "## Live DNS Status\n\n| Domain           | Status     | Expected         | Actual           | Timestamp              |\n"
 dns_results_md += "|------------------|------------|------------------|------------------|------------------------|\n"
 for res in results:
     dns_results_md += f"| {res['domain']} | {res['status']} | {', '.join(res['expected'])} | {', '.join(res['actual'])} | {res['timestamp']} |\n"
 
-# Update README.md in the Live Status section
+# Update README.md in the Live DNS Status section
 with open('README.md', 'r+') as readme_file:
     readme_content = readme_file.read()
-    updated_content = re.sub(r"(## Live Status\n\n\| Domain[^\n]+\n(?:\|[^\n]+\n)*)", dns_results_md, readme_content, flags=re.DOTALL)
+    updated_content = re.sub(r"(## Live DNS Status\n\n\| Domain[^\n]+\n(?:\|[^\n]+\n)*)", dns_results_md, readme_content, flags=re.DOTALL)
     
     readme_file.seek(0)
     readme_file.write(updated_content)
     readme_file.truncate()
 
 # Append current results to dns_status.md
+with open('history/dns_status.md', 'a') as status_file:
+    status_file.write(f"\n### DNS Check on {datetime.utcnow().isoformat()}\n\n")
+    status_file.write(dns_results_md)
+
+# Write current results to dns_status.md
 with open('history/dns_status.md', 'w') as status_file:
     status_file.write(f"\n### DNS Check on {datetime.utcnow().isoformat()}\n\n")
     status_file.write(dns_results_md)
