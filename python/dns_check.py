@@ -23,7 +23,7 @@ def run_dns_check(domain, expected_record, record_type, url=None):
             result = ["No record found"]
 
         # Determine if the DNS check passed or failed
-        status = "up" if result == expected_record else "down"
+        status = "up" if set(result) == set(expected_record) else "down"
         code = 1 if status == "up" else 0
         response_time = 0  # Placeholder for response time (could be set if measured)
 
