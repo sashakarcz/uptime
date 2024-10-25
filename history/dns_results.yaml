@@ -1,0 +1,14 @@
+- actual: 93.184.215.14
+  domain: example.com
+  expected: 93.184.216.34
+  timestamp: '2024-10-25 04:26:31.482416'
+- actual: '3.18.255.247
+
+    34.224.149.186'
+  domain: test.com
+  expected: 192.0.2.1
+  timestamp: '2024-10-25 04:26:31.513469'
+- actual: No record found
+  domain: mail.example.com
+  expected: mail.example.net
+  timestamp: '2024-10-25 04:26:31.547549'
