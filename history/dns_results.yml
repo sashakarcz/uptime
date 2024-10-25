@@ -4,19 +4,19 @@
   expected:
   - 93.184.216.34
   status: Failed
-  timestamp: '2024-10-25T14:09:07.393243'
+  timestamp: '2024-10-25T14:22:05.510512'
 - actual:
-  - 34.224.149.186
   - 3.18.255.247
+  - 34.224.149.186
   domain: test.com
   expected:
   - 192.0.2.1
   status: Failed
-  timestamp: '2024-10-25T14:09:07.447957'
+  timestamp: '2024-10-25T14:22:05.557798'
 - actual:
   - No record found
   domain: mail.example.com
   expected:
   - mail.example.net
   status: Failed
-  timestamp: '2024-10-25T14:09:07.512128'
+  timestamp: '2024-10-25T14:22:05.602078'
