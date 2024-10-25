@@ -17,26 +17,26 @@ sites:
     url: https://test.com
 
   # DNS Monitoring Configuration
-  - name: DNS Check - hidewall.io
+  - name: hidewall.io
     url: https://hidewall.io
     domain: hidewall.io
     expected_record:
       - 104.21.32.197
       - 172.67.154.114 
     record_type: A
-  - name: DNS Check - example.com
+  - name: example.com
     url: http://example.com
     domain: example.com
     expected_record:
       - 93.184.215.14
     record_type: A
-  - name: DNS Check - test.com
+  - name: test.com
     url: http://test.com
     domain: test.com
     expected_record:
       - 192.0.2.1
     record_type: A
-  - name: DNS Check - mail.example.com
+  - name: mail.example.com
     url: http://mail.example.com
     domain: mail.example.com
     expected_record:
