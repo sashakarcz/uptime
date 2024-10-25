@@ -88,5 +88,85 @@
     "timeMonth": 2761,
     "timeYear": 2761,
     "dailyMinutesDown": {}
+  },
+  {
+    "name": "DNS Check - hidewall.io",
+    "url": "https://hidewall.io",
+    "icon": "https://icons.duckduckgo.com/ip3/hidewall.io.ico",
+    "slug": "dns-check-hidewall-io",
+    "status": "down",
+    "uptime": "0.02%",
+    "uptimeDay": "0.02%",
+    "uptimeWeek": "0.02%",
+    "uptimeMonth": "0.02%",
+    "uptimeYear": "0.02%",
+    "time": 191,
+    "timeDay": 191,
+    "timeWeek": 191,
+    "timeMonth": 191,
+    "timeYear": 191,
+    "dailyMinutesDown": {
+      "2024-10-25": 21
+    }
+  },
+  {
+    "name": "DNS Check - example.com",
+    "url": "http://dns-check.example.com",
+    "icon": "https://icons.duckduckgo.com/ip3/dns-check.example.com.ico",
+    "slug": "dns-check-example-com",
+    "status": "down",
+    "uptime": "0.00%",
+    "uptimeDay": "0.00%",
+    "uptimeWeek": "0.00%",
+    "uptimeMonth": "0.00%",
+    "uptimeYear": "0.00%",
+    "time": 0,
+    "timeDay": 0,
+    "timeWeek": 0,
+    "timeMonth": 0,
+    "timeYear": 0,
+    "dailyMinutesDown": {
+      "2024-10-25": 23
+    }
+  },
+  {
+    "name": "DNS Check - test.com",
+    "url": "http://dns-check.test.com",
+    "icon": "https://icons.duckduckgo.com/ip3/dns-check.test.com.ico",
+    "slug": "dns-check-test-com",
+    "status": "down",
+    "uptime": "2.13%",
+    "uptimeDay": "2.13%",
+    "uptimeWeek": "2.13%",
+    "uptimeMonth": "2.13%",
+    "uptimeYear": "2.13%",
+    "time": 0,
+    "timeDay": 0,
+    "timeWeek": 0,
+    "timeMonth": 0,
+    "timeYear": 0,
+    "dailyMinutesDown": {
+      "2024-10-25": 23
+    }
+  },
+  {
+    "name": "DNS Check - mail.example.com",
+    "url": "http://dns-check.mail.example.com",
+    "icon": "https://icons.duckduckgo.com/ip3/dns-check.mail.example.com.ico",
+    "slug": "dns-check-mail-example-com",
+    "status": "down",
+    "uptime": "0.01%",
+    "uptimeDay": "0.01%",
+    "uptimeWeek": "0.01%",
+    "uptimeMonth": "0.01%",
+    "uptimeYear": "0.01%",
+    "time": 0,
+    "timeDay": 0,
+    "timeWeek": 0,
+    "timeMonth": 0,
+    "timeYear": 0,
+    "dailyMinutesDown": {
+      "2024-10-25": 23
+    }
   }
 ]
