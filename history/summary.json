@@ -88,14 +88,14 @@
     "timeMonth": 0,
     "timeYear": 0,
     "dailyMinutesDown": {
-      "2024-10-25": 529
+      "2024-10-25": 543
     }
   },
   {
-    "name": "Mail Example",
-    "url": "https://mail.example.com",
-    "icon": "https://icons.duckduckgo.com/ip3/mail.example.com.ico",
-    "slug": "mail-example",
+    "name": "DNS Check - example.com",
+    "url": "http://dns-check.example.com",
+    "icon": "https://icons.duckduckgo.com/ip3/dns-check.example.com.ico",
+    "slug": "dns-check-example-com",
     "status": "down",
     "uptime": "0.00%",
     "uptimeDay": "0.00%",
@@ -108,7 +108,47 @@
     "timeMonth": 0,
     "timeYear": 0,
     "dailyMinutesDown": {
-      "2024-10-25": 0
+      "2024-10-25": 4
+    }
+  },
+  {
+    "name": "DNS Check - test.com",
+    "url": "http://dns-check.test.com",
+    "icon": "https://icons.duckduckgo.com/ip3/dns-check.test.com.ico",
+    "slug": "dns-check-test-com",
+    "status": "down",
+    "uptime": "0.00%",
+    "uptimeDay": "0.00%",
+    "uptimeWeek": "0.00%",
+    "uptimeMonth": "0.00%",
+    "uptimeYear": "0.00%",
+    "time": 0,
+    "timeDay": 0,
+    "timeWeek": 0,
+    "timeMonth": 0,
+    "timeYear": 0,
+    "dailyMinutesDown": {
+      "2024-10-25": 4
+    }
+  },
+  {
+    "name": "DNS Check - mail.example.com",
+    "url": "http://dns-check.mail.example.com",
+    "icon": "https://icons.duckduckgo.com/ip3/dns-check.mail.example.com.ico",
+    "slug": "dns-check-mail-example-com",
+    "status": "down",
+    "uptime": "0.00%",
+    "uptimeDay": "0.00%",
+    "uptimeWeek": "0.00%",
+    "uptimeMonth": "0.00%",
+    "uptimeYear": "0.00%",
+    "time": 0,
+    "timeDay": 0,
+    "timeWeek": 0,
+    "timeMonth": 0,
+    "timeYear": 0,
+    "dailyMinutesDown": {
+      "2024-10-25": 4
     }
   }
 ]
