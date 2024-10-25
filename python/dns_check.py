@@ -1,6 +1,5 @@
 import yaml
 import subprocess
-import json
 from datetime import datetime
 
 # Load the config/domains.yml file
@@ -42,8 +41,8 @@ for entry in config['domains']:
     result = run_dns_check(domain, expected_record, record_type)
     results.append(result)
 
-# Write the results to a JSON file
-with open('history/dns_results.json', 'w') as outfile:
-    json.dump(results, outfile, indent=4)
+# Write the results to a YAML file
+with open('history/dns_results.yaml', 'w') as outfile:
+    yaml.dump(results, outfile, default_flow_style=False)
 
-print("DNS check completed. Results written to history/dns_results.json")
+print("DNS check completed. Results written to history/dns_results.yaml")
