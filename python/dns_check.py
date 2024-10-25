@@ -2,53 +2,39 @@ import yaml
 import subprocess
 from datetime import datetime
 
-# Load the config/domains.yml file
-with open('config/domains.yml', 'r') as file:
+# Load the .upptimerc.yml file
+with open('.upptimerc.yml', 'r') as file:
     config = yaml.safe_load(file)
 
 # Initialize the results array
 results = []
 
 # Function to run a DNS check
-def run_dns_check(domain, expected_records, record_type):
-    print(f"Running DNS check for {domain} (Type: {record_type}, Expected: {expected_records})")
+def run_dns_check(domain, expected_record, record_type):
+    print(f"Running DNS check for {domain} (Type: {record_type}, Expected: {expected_record})")
     try:
         # Run the dig command to get the DNS record
-        result = subprocess.check_output(["dig", "+short", domain, record_type], text=True).strip().split("\n")
+        result = subprocess.check_output(["dig", "+short", domain, record_type], text=True).strip().split('\n')
 
-        if not result or result == ['']:
+        if not result:
             result = ["No record found"]
 
-        # Check if actual matches any of the expected records
-        matched = all(r in expected_records for r in result) and all(e in result for e in expected_records)
-        if matched:
+        # Compare the result with the expected record
+        if set(result) == set(expected_record):
             print(f"DNS check passed for {domain}")
         else:
-            print(f"DNS check failed for {domain}. Got {result}, expected {expected_records}")
+            print(f"DNS check failed for {domain}. Got {result}, expected {expected_record}")
 
-        return {domain: {
-            "actual": result,
-            "expected": expected_records,
-            "timestamp": str(datetime.utcnow())
-        }}
+        return {domain: {"actual": result, "expected": expected_record, "timestamp": str(datetime.utcnow())}}
 
     except subprocess.CalledProcessError as e:
         print(f"Error during DNS check for {domain}: {str(e)}")
-        return {domain: {
-            "actual": ["Error"],
-            "expected": expected_records,
-            "timestamp": str(datetime.utcnow())
-        }}
+        return {domain: {"actual": ["Error"], "expected": expected_record, "timestamp": str(datetime.utcnow())}}
 
-# Iterate over the DNS entries in config/domains.yml
-for entry in config['domains']:
+# Iterate over the DNS entries in the .upptimerc.yml
+for entry in config['dns']['domains']:
     domain = entry['domain']
     expected_record = entry['expected_record']
-    
-    # Ensure expected_record is a list
-    if not isinstance(expected_record, list):
-        expected_record = [expected_record]
-    
     record_type = entry['record_type']
 
     # Run the DNS check
