@@ -25,6 +25,10 @@ jobs:
         run: |
           pip install pyyaml
 
+      - name: Remove old dns_results.json
+        run: |
+          rm history/dns_results.json
+
       # Run Python DNS check script
       - name: Run DNS Check Python Script
         run: |
