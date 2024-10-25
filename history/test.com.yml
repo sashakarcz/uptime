@@ -1,0 +1,12 @@
+code: 0
+expected:
+- 192.0.2.1
+generator: Upptime <https://github.com/upptime/upptime>
+lastUpdated: '2024-10-25T14:51:31.474743'
+responseTime: 0
+result:
+- 34.224.149.186
+- 3.18.255.247
+startTime: '2024-10-25T14:51:31.201949'
+status: down
+url: http://dns-check.test.com
