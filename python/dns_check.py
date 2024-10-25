@@ -37,7 +37,7 @@ def run_dns_check(domain, expected_record, record_type, url=None):
             "startTime": start_time,
             "result": result,
             "expected": expected_record,
-            "generator": "Upptime <https://github.com/upptime/upptime>"
+            "generator": "DNS Checker"
         }
 
         # Save individual domain result to its respective YAML file
@@ -64,7 +64,7 @@ def run_dns_check(domain, expected_record, record_type, url=None):
             "startTime": start_time,
             "result": ["Error"],
             "expected": expected_record,
-            "generator": "Upptime <https://github.com/upptime/upptime>"
+            "generator": "DNS Checker"
         }
 
         # Write error result to individual domain YAML file
