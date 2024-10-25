@@ -41,11 +41,6 @@ jobs:
           git fetch origin gh-pages
           git checkout gh-pages
 
-      # Apply the stashed files
-      - name: Apply stashed changes
-        run: |
-          git stash pop
-
       # Commit and push the DNS results to the gh-pages branch
       - name: Commit and Push Changes
         run: |
