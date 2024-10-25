@@ -2,10 +2,10 @@ code: 1
 expected:
 - 93.184.215.14
 generator: Upptime <https://github.com/upptime/upptime>
-lastUpdated: '2024-10-25T14:51:31.371155'
+lastUpdated: '2024-10-25T14:55:26.964236'
 responseTime: 0
 result:
 - 93.184.215.14
-startTime: '2024-10-25T14:51:31.201949'
+startTime: '2024-10-25T14:55:26.345363'
 status: up
 url: http://dns-check.example.com
