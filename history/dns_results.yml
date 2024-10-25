@@ -1,0 +1,16 @@
+- example.com:
+    actual:
+    - 93.184.215.14
+    expected: 93.184.216.34
+    timestamp: '2024-10-25 04:38:02.597095'
+- test.com:
+    actual:
+    - 34.224.149.186
+    - 3.18.255.247
+    expected: 192.0.2.1
+    timestamp: '2024-10-25 04:38:02.634100'
+- mail.example.com:
+    actual:
+    - No record found
+    expected: mail.example.net
+    timestamp: '2024-10-25 04:38:02.661513'
