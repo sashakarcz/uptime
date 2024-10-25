@@ -27,7 +27,7 @@ sites:
     url: http://dns-check.example.com
     domain: example.com
     expected_record:
-      - 93.184.216.34
+      - 93.184.215.14
     record_type: A
   - name: DNS Check - test.com
     url: http://dns-check.test.com
