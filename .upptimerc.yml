@@ -44,5 +44,7 @@ status-website:
   navbar:
     - title: Status
       href: /
+    - title: DNS
+      href: /history/dns_status.md
     - title: GitHub
       href: https://github.com/$OWNER/$REPO
