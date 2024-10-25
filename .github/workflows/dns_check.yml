@@ -31,10 +31,20 @@ jobs:
           python3 python/dns_check.py
 
       # Fetch and Checkout gh-pages Branch
+      - name: Stash untracked files
+      run: |
+        git stash --include-untracked
+
+      # Fetch and Checkout gh-pages Branch
       - name: Fetch and Checkout gh-pages Branch
         run: |
           git fetch origin gh-pages
           git checkout gh-pages
+
+      # Apply the stashed files
+      - name: Apply stashed changes
+        run: |
+          git stash pop
 
       # Commit and push the DNS results to the gh-pages branch
       - name: Commit and Push Changes
