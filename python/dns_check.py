@@ -3,7 +3,7 @@ import subprocess
 import json
 from datetime import datetime
 
-# Load the .upptimerc.yml file
+# Load the config/domains.yml file
 with open('config/domains.yml', 'r') as file:
     config = yaml.safe_load(file)
 
@@ -32,19 +32,18 @@ def run_dns_check(domain, expected_record, record_type):
         print(f"Error during DNS check for {domain}: {str(e)}")
         return {"domain": domain, "expected": expected_record, "actual": "Error", "timestamp": str(datetime.utcnow())}
 
-# Iterate over the sites and check for DNS checks
-for site in config['sites']:
-    if 'check' in site and site['check'] == 'dns':
-        domain = site['domain']
-        expected_record = site['expected_record']
-        record_type = site['record_type']
+# Iterate over the DNS entries in config/domains.yml
+for entry in config['domains']:
+    domain = entry['domain']
+    expected_record = entry['expected_record']
+    record_type = entry['record_type']
 
-        # Run the DNS check
-        result = run_dns_check(domain, expected_record, record_type)
-        results.append(result)
+    # Run the DNS check
+    result = run_dns_check(domain, expected_record, record_type)
+    results.append(result)
 
 # Write the results to a JSON file
 with open('history/dns_results.json', 'w') as outfile:
     json.dump(results, outfile, indent=4)
 
-print("DNS check completed. Results written to dns_results.json")
+print("DNS check completed. Results written to history/dns_results.json")
