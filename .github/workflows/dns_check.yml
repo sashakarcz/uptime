@@ -30,30 +30,31 @@ jobs:
         run: |
           python3 python/dns_check.py
 
-      # Stash any untracked or modified files, including DNS results
+      # Stash untracked/modified files, including DNS results
       - name: Stash changes before switching branches
         run: |
           git add history/dns_results.json
           git stash --include-untracked
 
-      # Fetch and Checkout gh-pages Branch
+      # Fetch and checkout gh-pages branch
       - name: Fetch and Checkout gh-pages Branch
         run: |
           git fetch origin gh-pages
           git checkout gh-pages
 
-      # Apply stashed changes
-      - name: Apply stashed changes
+      # Apply stashed changes with "theirs" strategy to resolve conflicts
+      - name: Apply stashed changes and resolve conflicts
         run: |
-          git stash pop
+          git stash pop || true
+          git checkout --theirs history/dns_results.json
+          git add history/dns_results.json
 
       # Commit and push the DNS results to the gh-pages branch
       - name: Commit and Push Changes
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-          git add history/dns_results.json
-          git commit -m "Update DNS Monitoring Results"
+          git commit -m "Update DNS Monitoring Results" || echo "No changes to commit"
           git push origin gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
