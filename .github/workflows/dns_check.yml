@@ -31,9 +31,9 @@ jobs:
           python3 python/dns_check.py
 
       # Stash untracked/modified files, including DNS results
-      - name: Stash changes before switching branches
+      - name: Track Changes
         run: |
-          git add history/dns_results.json
+          git add .
 
       # Commit and push the DNS results to the gh-pages branch
       - name: Commit and Push Changes
