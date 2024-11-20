@@ -1,7 +1,7 @@
 url: http://test.com
 status: down
-code: 0
-responseTime: 0
-lastUpdated: 2024-11-19T23:02:13.330Z
+code: 403
+responseTime: 475
+lastUpdated: 2024-11-20T23:02:07.953Z
 startTime: 2024-10-25T15:20:51.326Z
 generator: Upptime <https://github.com/upptime/upptime>
