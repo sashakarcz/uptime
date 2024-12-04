@@ -43,18 +43,20 @@
     "url": "https://news.ycombinator.com",
     "icon": "https://icons.duckduckgo.com/ip3/news.ycombinator.com.ico",
     "slug": "hacker-news",
-    "status": "up",
+    "status": "down",
     "uptime": "100.00%",
-    "uptimeDay": "100.00%",
+    "uptimeDay": "99.97%",
     "uptimeWeek": "100.00%",
     "uptimeMonth": "100.00%",
     "uptimeYear": "100.00%",
-    "time": 335,
-    "timeDay": 158,
-    "timeWeek": 336,
-    "timeMonth": 326,
-    "timeYear": 335,
-    "dailyMinutesDown": {}
+    "time": 332,
+    "timeDay": 145,
+    "timeWeek": 310,
+    "timeMonth": 320,
+    "timeYear": 332,
+    "dailyMinutesDown": {
+      "2024-12-04": 0
+    }
   },
   {
     "name": "Example",
@@ -109,7 +111,7 @@
     "timeMonth": 186,
     "timeYear": 188,
     "dailyMinutesDown": {
-      "2024-12-04": 9,
+      "2024-12-04": 237,
       "2024-12-03": 1440,
       "2024-12-02": 1440,
       "2024-12-01": 1440,
@@ -187,7 +189,7 @@
     "timeMonth": 4429,
     "timeYear": 4086,
     "dailyMinutesDown": {
-      "2024-12-04": 9,
+      "2024-12-04": 237,
       "2024-12-03": 1440,
       "2024-12-02": 1440,
       "2024-12-01": 1440,
@@ -247,7 +249,7 @@
     "timeMonth": 0,
     "timeYear": 0,
     "dailyMinutesDown": {
-      "2024-12-04": 9,
+      "2024-12-04": 237,
       "2024-12-03": 1440,
       "2024-12-02": 1440,
       "2024-12-01": 1440,
