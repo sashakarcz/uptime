@@ -63,7 +63,7 @@
     "url": "https://example.com",
     "icon": "https://icons.duckduckgo.com/ip3/example.com.ico",
     "slug": "example",
-    "status": "up",
+    "status": "down",
     "uptime": "100.00%",
     "uptimeDay": "100.00%",
     "uptimeWeek": "100.00%",
@@ -111,7 +111,7 @@
     "timeMonth": 167,
     "timeYear": 182,
     "dailyMinutesDown": {
-      "2025-01-16": 478,
+      "2025-01-16": 769,
       "2025-01-15": 1440,
       "2025-01-14": 1440,
       "2025-01-13": 1440,
@@ -232,7 +232,7 @@
     "timeMonth": 1620,
     "timeYear": 2995,
     "dailyMinutesDown": {
-      "2025-01-16": 478,
+      "2025-01-16": 769,
       "2025-01-15": 1440,
       "2025-01-14": 1440,
       "2025-01-13": 1440,
@@ -335,7 +335,7 @@
     "timeMonth": 0,
     "timeYear": 0,
     "dailyMinutesDown": {
-      "2025-01-16": 478,
+      "2025-01-16": 769,
       "2025-01-15": 1440,
       "2025-01-14": 1440,
       "2025-01-13": 1440,
